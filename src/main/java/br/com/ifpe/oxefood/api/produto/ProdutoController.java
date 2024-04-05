@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ifpe.oxefood.modelo.produto.Produto;
 import br.com.ifpe.oxefood.modelo.produto.ProdutoService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/produto")
 @CrossOrigin
