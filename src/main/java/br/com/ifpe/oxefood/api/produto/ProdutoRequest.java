@@ -33,6 +33,7 @@ public class ProdutoRequest {
                 .descricao(descricao)
                 .valorUnitario(valorUnitario)
                 .tempoEntregaMaximo(tempoEntregaMaximo)
+                .tempoEntregaMinimo(tempoEntregaMinimo)
                 .build();
     }
     
