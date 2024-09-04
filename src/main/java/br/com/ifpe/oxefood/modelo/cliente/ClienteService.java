@@ -9,8 +9,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.modelo.mensagens.EmailService;
+import br.com.ifpe.oxefood.util.exception.ClienteException;
+
 @Service
 public class ClienteService {
+
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private ClienteRepository repository;
@@ -21,10 +27,22 @@ public class ClienteService {
     @Transactional
     public Cliente save(Cliente cliente) {
 
+        Cliente clienteConsultado = repository.findByNome(cliente.getNome());
+
+        if (clienteConsultado != null) {
+
+            throw new ClienteException(ClienteException.MSG_NOME_DUPLICADO);
+
+        }
+
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());
-        return repository.save(cliente);
+        Cliente clienteSalvo = repository.save(cliente);
+
+        emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);
+
+        return clienteSalvo;
     }
 
     public List<Cliente> listarTodos() {

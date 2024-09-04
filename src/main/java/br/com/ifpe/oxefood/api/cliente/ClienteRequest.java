@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -29,8 +29,11 @@ public class ClienteRequest {
    @NotNull(message = "O Nome é de preenchimento obrigatório")
    @NotEmpty(message = "O Nome é de preenchimento obrigatório")
    @Length(max = 100, message = "O Nome deverá ter no máximo {max} caracteres")
-
    private String nome;
+
+   @NotBlank(message = "O Email é de preenchimento obrigatório")
+    @Email
+    private String email;
 
    @JsonFormat(pattern = "dd/MM/yyyy")
    private LocalDate dataNascimento;
@@ -48,6 +51,7 @@ public class ClienteRequest {
 
        return Cliente.builder()
            .nome(nome)
+           .email(email)
            .dataNascimento(dataNascimento)
            .cpf(cpf)
            .foneCelular(foneCelular)
